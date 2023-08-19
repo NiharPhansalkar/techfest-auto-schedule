@@ -1,0 +1,15 @@
+{
+  "name": "techfest-auto-schedule",
+  "version": "1.0.0",
+  "description": "An automatic scheduler for players",
+  "main": "backend/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon backend/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

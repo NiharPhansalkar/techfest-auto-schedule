@@ -6,7 +6,7 @@ const teamSchema = new mongoose.Schema({
     member2: { type: String, required: true },
     member3: { type: String },
     member4: { type: String },
-    email: {
+    userEmail: {
         type: String,
         required: true,
         unique: true,

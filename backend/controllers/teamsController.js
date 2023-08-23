@@ -1,30 +1,31 @@
-const Team = require('../models/TeamModel');
+const Team = require("../models/TeamModel");
 
 module.exports = {
-  createTeam: async (req, res) => {
-    try {
-      const { team-name, member-one, member-two, member-three, member-four, user-email } = req.body;
+    createTeam: async (req, res) => {
+        try {
+            const { teamName, member1, member2, member3, member4, userEmail } = req.body;
       
-      const newTeamData = {
-        team-name,
-        member-one,
-        member-two,
-      };
+            const newTeamData = {
+                teamName,
+                member1,
+                member2,
+                userEmail,
+            };
 
-      if (member-three) {
-        newTeamData.member-three = member-three;
-      }
+            if (member3) {
+                newTeamData.member3 = member3;
+            }
       
-      if (member-four) {
-        newTeamData.member-four = member-four;
-      }
+            if (member4) {
+                newTeamData.member4 = member4;
+            }
 
-      const newTeam = new Team(newTeamData);
-      const savedTeam = await newTeam.save();
-      res.json(savedTeam);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to create a new team' });
-    }
-  },
+            const newTeam = new Team(newTeamData);
+            const savedTeam = await newTeam.save();
+            res.json(savedTeam);
+        } catch (error) {
+            res.status(500).json({ error: "Failed to create a new team" });
+        }
+    },
 };
 

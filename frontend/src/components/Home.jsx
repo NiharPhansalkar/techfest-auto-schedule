@@ -34,10 +34,10 @@ function Home() {
 
   const [formData, setFormData] = useState({
     teamName: '',
-    memberOne: '',
-    memberTwo: '',
-    memberThree: '',
-    memberFour: '',
+    member1: '',
+    member2: '',
+    member3: '',
+    member4: '',
     userEmail: '',
   });
 
@@ -76,8 +76,8 @@ function Home() {
                   <RiTeamLine />
                 </div>
                 <div className="details">
-                  <h5>Team Name</h5>
-                  <input type="text" className="input" id="team-name" name="team-name" onChange={handleChange} required />
+                  <label htmlFor="teamName">Team Name</label>
+                  <input type="text" className="input" id="teamName" name="teamName" onChange={handleChange} required />
                 </div>
               </div>
               <div className="input-div one">
@@ -85,8 +85,8 @@ function Home() {
                   <BsFillPersonLinesFill />
                 </div>
                 <div className="details">
-                  <h5>Member One</h5>
-                  <input type="text" className="input" id="member-one" name="member-one" onChange={handleChange} required />
+                  <label htmlFor="member1">Member One</label>
+                  <input type="text" className="input" id="member1" name="member1" onChange={handleChange} required />
                 </div>
               </div>
               <div className="input-div one">
@@ -94,8 +94,8 @@ function Home() {
                   <BsFillPersonLinesFill />
                 </div>
                 <div className="details">
-                  <h5>Member two</h5>
-                  <input type="text" className="input" id="member-two" name="member-two" onChange={handleChange} required />
+                  <label htmlFor="member2">Member two</label>
+                  <input type="text" className="input" id="member2" name="member2" onChange={handleChange} required />
                 </div>
               </div>
               <div className="input-div one">
@@ -103,8 +103,8 @@ function Home() {
                   <BsFillPersonLinesFill />
                 </div>
                 <div className="details">
-                  <h5>Member three</h5>
-                  <input type="text" className="input" id="member-three" name="member-three" onChange={handleChange} />
+                  <label htmlFor="member3">Member three</label>
+                  <input type="text" className="input" id="member3" name="member3" onChange={handleChange} />
                 </div>
               </div>
               <div className="input-div one">
@@ -112,8 +112,8 @@ function Home() {
                   <BsFillPersonLinesFill />
                 </div>
                 <div className="details">
-                  <h5>Member four</h5>
-                  <input type="text" className="input" id="member-four" name="member-four" onChange={handleChange} />
+                  <label htmlFor="member4">Member four</label>
+                  <input type="text" className="input" id="member4" name="member4" onChange={handleChange} />
                 </div>
               </div>
               <div className="input-div one">
@@ -121,8 +121,8 @@ function Home() {
                   <HiOutlineMail />
                 </div>
                 <div className="details">
-                  <h5>Email of any member</h5>
-                  <input type="email" className="input" id="user-email" name="user-email" onChange={handleChange} required />
+                  <label htmlFor="userEmail">Email of any member</label>
+                  <input type="email" className="input" id="userEmail" name="userEmail" onChange={handleChange} required />
                 </div>
               </div>
               <button className="glowing-btn" type="submit">

@@ -1,7 +1,7 @@
 const Team = require("../models/TeamModel");
 
 module.exports = {
-    createTeam: async (req, res) => {
+    registerTeam: async (req, res) => {
         try {
             const { teamName, member1, member2, member3, member4, userEmail } = req.body;
       

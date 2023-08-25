@@ -74,7 +74,7 @@ function Home() {
             <img src={peopleVectorArt} alt="vector art" />
           </div>
           <div className="information">
-              {!responseTeamName ? (
+              {responseTeamName ? (
                 <div className="response-message">
                     <h1>Thank you for registering!</h1>
                     <h3>{responseTeamName}</h3>

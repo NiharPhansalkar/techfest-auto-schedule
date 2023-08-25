@@ -41,12 +41,18 @@ function Home() {
     userEmail: '',
   });
 
+  const [responseTime, setResponseTime] = useState('');
+  const [responseTeamName, setResponseTeamName] = useState('');
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const response = await axios.post('/api/v1/register', formData);
       console.log('Response from backend:', response.data);
+
+      setResponseTime(`Your time is ${response.data.timestamp}`);
+      setResponseTeamName(`Thank you for registering ${response.data.teamName}!`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -68,6 +74,14 @@ function Home() {
             <img src={peopleVectorArt} alt="vector art" />
           </div>
           <div className="information">
+              {!responseTeamName ? (
+                <div className="response-message">
+                    <h1>Thank you for registering!</h1>
+                    <h3>{responseTeamName}</h3>
+                    <p>{responseTime}</p>
+                </div>
+              ) : (
+
             <form method="POST" onSubmit={handleSubmit}>
               <img src={codexLight} alt="vector art" />
               <h2>Register yourself!</h2>
@@ -133,6 +147,7 @@ function Home() {
                 </span>
               </button>
             </form>
+              )}
           </div>
         </div>
       </div>

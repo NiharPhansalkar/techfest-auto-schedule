@@ -159,6 +159,14 @@ form{
 	margin-bottom: 4px;
 }
 
+.response-message {
+    color: white;
+}
+.response-message > h1 {
+    font-size: 3rem;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
 .glowing-btn {
   margin-top: 1.5rem;
   position: relative;

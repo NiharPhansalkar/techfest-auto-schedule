@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz@10..48&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sedgwick+Ave+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 :root {
@@ -163,8 +164,14 @@ form{
     color: white;
 }
 .response-message > h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-family: 'Bebas Neue', sans-serif;
+}
+
+.response-message > p {
+    margin-top: 2.8rem;
+    font-size: 1.5rem;
+	font-family: 'poppins', sans-serif;
 }
 
 .glowing-btn {

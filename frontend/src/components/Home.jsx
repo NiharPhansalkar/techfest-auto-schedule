@@ -76,8 +76,7 @@ function Home() {
           <div className="information">
               {responseTeamName ? (
                 <div className="response-message">
-                    <h1>Thank you for registering!</h1>
-                    <h3>{responseTeamName}</h3>
+                    <h1>{responseTeamName}!</h1>
                     <p>{responseTime}</p>
                 </div>
               ) : (

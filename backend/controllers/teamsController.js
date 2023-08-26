@@ -5,8 +5,8 @@ module.exports = {
         try {
             const { teamName, member1, member2, member3, member4, userEmail } = req.body;
 
-            const playTime = 15; // 15 mins 
-            const playTimeMilli = 15 * 60 * 1000; // 15 mins converted to milliseconds
+            const playTime = 15; // 15 mins
+            const playTimeMilli = playTime * 60 * 1000; // 15 mins converted to milliseconds
             const bufferTime = 10 * 60 * 1000; // 10 mins converted to milliseconds
       
             const newTeamData = {
@@ -27,34 +27,29 @@ module.exports = {
             const newTeam = new Team(newTeamData);
             const savedTeam = await newTeam.save();
 
-            const fifteenMinsAgo = new Date();
-            fifteenMinsAgo.setMinutes(fifteenMinsAgo.getMinutes() - playTime);
-            const queue = await Team.find({ timestamp: { $gt: fifteenMinsAgo } });
+            const currentTimestamp = Date.now();
 
-            let maxTimestamp = 0;
+            // Find the maximum timestamp of all teams by sorting in descending order
+            const maxTimestampTeam = await Team.findOne({}, {}, { sort: { timestamp: -1 } });
 
-            for (const team of queue) {
-                let teamTimestamp = team.timestamp.getTime();
-                if (teamTimestamp > maxTimestamp) {
-                    maxTimestamp = teamTimestamp;
-                }
-            }
+            let nextTeamTimestamp;
 
-            let queueTimestamp;
-
-            if (maxTimestamp === 0) {
-                queueTimestamp = Date.now() + bufferTime;
+            if (maxTimestampTeam && maxTimestampTeam._id.toString() !== savedTeam._id.toString()) {
+                // Calculate next team timestamp based on maxTimestampTeam's playtime + buffer
+                const maxTeamTimestamp = maxTimestampTeam.timestamp.getTime();
+                nextTeamTimestamp = maxTeamTimestamp + playTimeMilli + bufferTime;
             } else {
-                queueTimestamp = maxTimestamp + playTimeMilli + bufferTime;
+                // For none or one team in the queue
+                nextTeamTimestamp = currentTimestamp + bufferTime;
             }
 
-            await Team.updateOne({ _id: savedTeam._id }, { $set: { timestamp: new Date(queueTimestamp) } });
+            await Team.updateOne({ _id: savedTeam._id }, { $set: { timestamp: new Date(nextTeamTimestamp) } });
 
-            const formattedTimestamp = new Date(queueTimestamp).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+            const formattedNextTeamTimestamp = new Date(nextTeamTimestamp).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
             res.json({
                 teamName: savedTeam.teamName,
-                timestamp: formattedTimestamp
+                timestamp: formattedNextTeamTimestamp
             });
         } catch (error) {
             res.status(500).json({ error: "Failed to create a new team" });

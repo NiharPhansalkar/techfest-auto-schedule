@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/homeStyles.css';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
+import { RiUserAddLine } from 'react-icons/ri'
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiTeamLine } from 'react-icons/ri';
 import codexLight from '../assets/codex_light.png';
@@ -34,10 +35,10 @@ function Home() {
 
   const [formData, setFormData] = useState({
     teamName: '',
-    member1: '',
-    member2: '',
-    member3: '',
-    member4: '',
+    members: [
+        { name: '' },
+        { name: '' },
+    ],
     userEmail: '',
   });
 
@@ -58,12 +59,23 @@ function Home() {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event, category, index) => {
     const { name, value } = event.target;
+    const updatedCategory = [...formData[category]]
+    updatedCategory[index][name] = value;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [category]: updatedCategory,
     }));
+  };
+
+  const handleAddMember = () => {
+    if (formData.members.length < 4) {
+      setFormData((prevData) => ({
+        ...prevData,
+        members: [...prevData.members, { name: '' }],
+      }));
+    }
   };
 
   return (
@@ -90,45 +102,32 @@ function Home() {
                 </div>
                 <div className="details">
                   <label htmlFor="teamName">Team Name</label>
-                  <input type="text" className="input" id="teamName" name="teamName" onChange={handleChange} required />
+                    <input type="text" className="input" id="teamName" name="teamName" onChange={(e) => handleChange(e, 'teamName')} required />
                 </div>
               </div>
-              <div className="input-div one">
-                <div className="icon">
-                  <BsFillPersonLinesFill />
+              {formData.members.map((member, index) => (
+                <div className="input-div one" key={index}>
+                  <div className="icon">
+                    <BsFillPersonLinesFill />
+                  </div>
+                  <div className="details">
+                    <label htmlFor={`member${index + 1}`}> Member {index + 1}</label>
+                    <input
+                      type="text"
+                      className="input"
+                      id={`member${index + 1}`}
+                      name={`member${index + 1}`}
+                      onChange={(e) => handleChange(e, 'members', index)}
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="details">
-                  <label htmlFor="member1">Member One</label>
-                  <input type="text" className="input" id="member1" name="member1" onChange={handleChange} required />
+              ))}
+              {formData.members.length < 4 && (
+                <div className="add-member"> 
+                    <button type="button" onClick={handleAddMember}><RiUserAddLine /></button>
                 </div>
-              </div>
-              <div className="input-div one">
-                <div className="icon">
-                  <BsFillPersonLinesFill />
-                </div>
-                <div className="details">
-                  <label htmlFor="member2">Member two</label>
-                  <input type="text" className="input" id="member2" name="member2" onChange={handleChange} required />
-                </div>
-              </div>
-              <div className="input-div one">
-                <div className="icon">
-                  <BsFillPersonLinesFill />
-                </div>
-                <div className="details">
-                  <label htmlFor="member3">Member three</label>
-                  <input type="text" className="input" id="member3" name="member3" onChange={handleChange} />
-                </div>
-              </div>
-              <div className="input-div one">
-                <div className="icon">
-                  <BsFillPersonLinesFill />
-                </div>
-                <div className="details">
-                  <label htmlFor="member4">Member four</label>
-                  <input type="text" className="input" id="member4" name="member4" onChange={handleChange} />
-                </div>
-              </div>
+              )}
               <div className="input-div one">
                 <div className="icon">
                   <HiOutlineMail />
@@ -146,7 +145,7 @@ function Home() {
                 </span>
               </button>
             </form>
-              )}
+           )}
           </div>
         </div>
       </div>

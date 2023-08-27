@@ -160,6 +160,14 @@ form{
 	margin-bottom: 4px;
 }
 
+.add-member > button {
+    border: none;
+    filter: invert(1);
+    background-color: transparent;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
 .response-message {
     color: white;
 }

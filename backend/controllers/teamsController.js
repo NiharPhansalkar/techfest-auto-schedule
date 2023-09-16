@@ -3,7 +3,11 @@ const Team = require("../models/TeamModel");
 module.exports = {
     registerTeam: async (req, res) => {
         try {
-            const { teamName, member1, member2, member3, member4, userEmail, timestamp } = req.body;
+            const { teamName, members, userEmail, timestamp } = req.body;
+
+            const memberNames = members.map(member => member.name);
+
+            const [member1, member2, member3, member4] = memberNames;
 
             const newTeamData = {
                 teamName,

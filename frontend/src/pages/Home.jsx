@@ -40,7 +40,6 @@ function Home() {
         { name: '' },
     ],
     userEmail: '',
-    timestamp: null,
   });
 
   const [timeToArrive, setTimeToArrive] = useState('');
@@ -52,18 +51,14 @@ function Home() {
     try {
       const latestTimestampRes = await axios.get('/api/v1/latestTime');
       const latestTimestamp = latestTimestampRes.data.latestTimestamp;
+      let teamTime;
       const initialWait = 10;
       const playTime = 25;
 
-      if (latestTimestamp == null) {
+      if (latestTimestamp === null) {
         const currentTime = Date.now();
-        const teamTime = new Date(currentTime); 
+        teamTime = new Date(currentTime); 
         teamTime.setMinutes(teamTime.getMinutes() + initialWait + playTime);
-
-        setFormData({
-          ...formData,
-          timestamp: teamTime, // Store timestamp as a Date object
-        });
 
         const timeToArriveDate = new Date(currentTime);
         timeToArriveDate.setMinutes(timeToArriveDate.getMinutes() + initialWait);
@@ -71,13 +66,8 @@ function Home() {
         setTimeToArrive(`Your time is ${timeToArriveDate.toLocaleTimeString()}`);
         setNameOfTeam(`Thank you for registering ${formData.teamName}!`);
       } else {
-        const teamTime = new Date(latestTimestamp);
+        teamTime = new Date(latestTimestamp);
         teamTime.setMinutes(teamTime.getMinutes() + initialWait + playTime);
-
-        setFormData({
-          ...formData,
-          timestamp: teamTime, // Store timestamp as a Date object
-        });
 
         const timeToArriveDate = new Date(latestTimestamp);
         timeToArriveDate.setMinutes(timeToArriveDate.getMinutes() + initialWait);
@@ -85,20 +75,26 @@ function Home() {
         setTimeToArrive(`Your time is ${timeToArriveDate.toLocaleTimeString()}`);
         setNameOfTeam(`Thank you for registering ${formData.teamName}!`);
       }
-      const response = await axios.post('/api/v1/register', formData);
+      const newFormData = {
+        ...formData,
+        timestamp: teamTime;
+      }
+      const response = await axios.post('/api/v1/register', newFormData);
       console.log('Response from backend:', response.data);
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   const handleChange = (event, category, index) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
 
     setFormData((prevData) => {
       if (Array.isArray(prevData[category])) {
         const updatedCategory = [...prevData[category]];
-        updatedCategory[index][name] = value;
+        updatedCategory[index].name = value;
+
         return {
           ...prevData,
           [category]: updatedCategory,
@@ -111,7 +107,6 @@ function Home() {
       }
     });
   };
-
 
   const handleAddMember = () => {
     if (formData.members.length < 4) {
@@ -178,7 +173,7 @@ function Home() {
                 </div>
                 <div className="details">
                   <label htmlFor="userEmail">Email of any member</label>
-                  <input type="email" className="input" id="userEmail" name="userEmail" onChange={handleChange} required />
+                  <input type="email" className="input" id="userEmail" name="userEmail" onChange={(e) => handleChange(e, 'userEmail')} required />
                 </div>
               </div>
               <button className="glowing-btn" type="submit">

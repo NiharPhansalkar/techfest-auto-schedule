@@ -40,20 +40,53 @@ function Home() {
         { name: '' },
     ],
     userEmail: '',
+    timestamp: null,
   });
 
-  const [responseTime, setResponseTime] = useState('');
-  const [responseTeamName, setResponseTeamName] = useState('');
+  const [timeToArrive, setTimeToArrive] = useState('');
+  const [nameOfTeam, setNameOfTeam] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      const latestTimestampRes = await axios.get('/api/v1/latestTime');
+      const latestTimestamp = latestTimestampRes.data.latestTimestamp;
+      const initialWait = 10;
+      const playTime = 25;
+
+      if (latestTimestamp == null) {
+        const currentTime = Date.now();
+        const teamTime = new Date(currentTime); 
+        teamTime.setMinutes(teamTime.getMinutes() + initialWait + playTime);
+
+        setFormData({
+          ...formData,
+          timestamp: teamTime, // Store timestamp as a Date object
+        });
+
+        const timeToArriveDate = new Date(currentTime);
+        timeToArriveDate.setMinutes(timeToArriveDate.getMinutes() + initialWait);
+
+        setTimeToArrive(`Your time is ${timeToArriveDate.toLocaleTimeString()}`);
+        setNameOfTeam(`Thank you for registering ${formData.teamName}!`);
+      } else {
+        const teamTime = new Date(latestTimestamp);
+        teamTime.setMinutes(teamTime.getMinutes() + initialWait + playTime);
+
+        setFormData({
+          ...formData,
+          timestamp: teamTime, // Store timestamp as a Date object
+        });
+
+        const timeToArriveDate = new Date(latestTimestamp);
+        timeToArriveDate.setMinutes(timeToArriveDate.getMinutes() + initialWait);
+
+        setTimeToArrive(`Your time is ${timeToArriveDate.toLocaleTimeString()}`);
+        setNameOfTeam(`Thank you for registering ${formData.teamName}!`);
+      }
       const response = await axios.post('/api/v1/register', formData);
       console.log('Response from backend:', response.data);
-
-      setResponseTime(`Your time is ${response.data.timestamp}`);
-      setResponseTeamName(`Thank you for registering ${response.data.teamName}!`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -61,13 +94,24 @@ function Home() {
 
   const handleChange = (event, category, index) => {
     const { name, value } = event.target;
-    const updatedCategory = [...formData[category]]
-    updatedCategory[index][name] = value;
-    setFormData((prevData) => ({
-      ...prevData,
-      [category]: updatedCategory,
-    }));
+
+    setFormData((prevData) => {
+      if (Array.isArray(prevData[category])) {
+        const updatedCategory = [...prevData[category]];
+        updatedCategory[index][name] = value;
+        return {
+          ...prevData,
+          [category]: updatedCategory,
+        };
+      } else {
+        return {
+          ...prevData,
+          [category]: value,
+        };
+      }
+    });
   };
+
 
   const handleAddMember = () => {
     if (formData.members.length < 4) {
@@ -86,10 +130,10 @@ function Home() {
             <img src={peopleVectorArt} alt="vector art" />
           </div>
           <div className="information">
-              {responseTeamName ? (
+              {nameOfTeam ? (
                 <div className="response-message">
-                    <h1>{responseTeamName}!</h1>
-                    <p>{responseTime}</p>
+                    <h1>{nameOfTeam}!</h1>
+                    <p>{timeToArrive}</p>
                 </div>
               ) : (
 

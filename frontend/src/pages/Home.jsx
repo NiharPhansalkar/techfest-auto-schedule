@@ -53,7 +53,7 @@ function Home() {
       const latestTimestamp = latestTimestampRes.data.latestTimestamp;
       let teamTime;
       const initialWait = 10;
-      const playTime = 25;
+      const playTime = 15;
 
       if (latestTimestamp === null) {
         const currentTime = Date.now();
@@ -77,7 +77,7 @@ function Home() {
       }
       const newFormData = {
         ...formData,
-        timestamp: teamTime;
+        timestamp: teamTime,
       }
       const response = await axios.post('/api/v1/register', newFormData);
       console.log('Response from backend:', response.data);

@@ -64,7 +64,7 @@ function LoginCard({ onAuthSuccess }) {
   }
 
   return (
-    <form method="POST" onSubmit={handleLogin}>
+    <form method="POST" onSubmit={handleLogin} id="adminForm">
       <img src={codexLight} alt="codex logo" />
       <h2>Login</h2>
       <div className="input-div">

@@ -7,7 +7,7 @@ const path = require("path");
 app.use("/api/v1", teamRoute);
 app.use("/api/v1", authRoute);
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 

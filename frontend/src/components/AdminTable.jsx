@@ -26,7 +26,7 @@ function AdminTable() {
     
     async function fetchData() {
       const response = await axios.get('/api/v1/allTeams');
-      const adjustedTeams = response.data.teams.map((team) => ({
+      const adjustedTeams = response.data.allTeams.map((team) => ({
         ...team,
         arrivalTime: formatPlaytime(new Date(team.timestamp)),
       }));
@@ -69,8 +69,8 @@ function AdminTable() {
       {teams.map((team, index) => (
         <tr>
           <td>{index + 1}</td>
-          <td>{team.name}</td>
-          <td>{team.email}</td>
+          <td>{team.teamName}</td>
+          <td>{team.userEmail}</td>
           <td>{team.arrivalTime}</td>
           <td>
             <button onClick={() => handleReschedule(team._id)}>Reschedule</button>

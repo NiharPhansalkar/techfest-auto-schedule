@@ -45,7 +45,7 @@ function LoginCard({ onAuthSuccess }) {
       const { message } = response.data;
       
       if (message === "Authentication Successful") {
-        const validationResponse = await axios.get('/api/v1/admintable');
+        const validationResponse = await axios.get('/api/v1/validtoken');
         
         const { isValidToken } = validationResponse.data;
 

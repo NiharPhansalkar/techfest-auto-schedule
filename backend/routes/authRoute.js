@@ -1,9 +1,9 @@
 const express = require("express");
 const authController = require("../controllers/authController");
-const verifyToken = require("../middleware/verifyToken");
+const tokenController = require("../controllers/tokenController");
 const router = express.Router();
 
 router.post("/authenticate", authController.authenticateUser);
-router.post("/validtoken", verifyToken, authController.validToken);
+router.get("/validtoken", tokenController.validToken);
 
 module.exports = router;

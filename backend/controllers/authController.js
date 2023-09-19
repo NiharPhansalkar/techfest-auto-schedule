@@ -28,8 +28,5 @@ module.exports = {
     } else {
           res.status(401).json({ message: "Authentication Unsuccessful" });
     }
-  }, 
-  validToken: (req, res) => {
-    res.status(200).json({ isValidToken: true });
-  }
+  },
 }

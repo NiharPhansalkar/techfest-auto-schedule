@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
 import { MdPassword } from 'react-icons/md';
 import codexLight from '../assets/codex_light.png';
+import axios from 'axios';
 
-function LoginCard() {
+function LoginCard({ onAuthSuccess }) {
   useEffect(() => {
     function addFocusClass(event) {
       const parent = event.target.parentNode.parentNode;
@@ -28,8 +29,42 @@ function LoginCard() {
     });
   }, []);
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post('/api/v1/authenticate', {
+        username: username,
+        password: password,
+      });
+
+      const { message } = response.data;
+      
+      if (message === "Authentication Successful") {
+        const validationResponse = await axios.get('/api/v1/admintable');
+        
+        const { isValidToken } = validationResponse.data;
+
+        if (isValidToken) {
+          onAuthSuccess();
+        } else {
+            setLoginError("Authentication failed. Please try again");
+        }
+      } else {
+        setLoginError("Authentication failed. Please try again."); 
+      }
+    } catch (error) {
+      setLoginError("Internal error"); 
+    }
+
+  }
+
   return (
-    <form method="POST">
+    <form method="POST" onSubmit={handleLogin}>
       <img src={codexLight} alt="codex logo" />
       <h2>Login</h2>
       <div className="input-div">
@@ -38,7 +73,7 @@ function LoginCard() {
         </div>
         <div className="details">
           <label htmlFor="username">Username</label>
-          <input type="text" className="input" id="username" name="username" required />
+          <input type="text" className="input" id="username" name="username" onChange={(e) => setUsername(e.target.value)} required />
         </div>
       </div>
       <div className="input-div">
@@ -47,9 +82,10 @@ function LoginCard() {
         </div>
         <div className="details">
           <label htmlFor="password">Password</label>
-          <input type="password" className="input" id="password" name="password" required />
+          <input type="password" className="input" id="password" name="password" onChange={(e) => setPassword(e.target.value)} required />
         </div>
       </div>
+      { loginError && <div className="error">{loginError}</div> }
       <button className="glowing-btn" type="submit">
         <span className="glowing-txt">
           LO

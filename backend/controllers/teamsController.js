@@ -48,5 +48,34 @@ module.exports = {
             res.status(500).json({ error: "Failed to get playing teams" });
         }
     },
+    getAllTeams: async (req, res) => {
+      try {
+        const allTeams = await Team.find().sort({ timestamp: 1 });
+
+        res.status(200).json({ allTeams });
+      } catch (error) {
+        res.status(500).json({ error: "Failed to get all teams" });
+      }
+    },
+    updateTeamTimestamp: async (req, res) => {
+      const { teamId } = req.params;
+      const { newTimestamp } = req.body;
+     
+      try {
+        const team = await Team.findById(teamId);
+
+        if (!team) {
+          return res.status(404).json({ error: "Team not found" });
+        }
+
+        team.timestamp = newTimestamp;
+
+        await team.save();
+
+        res.json({ message: 'Timestamp updated successfully', updatedTeam: team });
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to update timestamp' });
+      }
+    },
 };
 

@@ -133,7 +133,7 @@ function Home() {
               ) : (
 
             <form method="POST" onSubmit={handleSubmit}>
-              <img src={codexLight} alt="vector art" />
+              <img src={codexLight} alt="codex logo" />
               <h2>Register yourself!</h2>
               <div className="input-div one">
                 <div className="icon">
@@ -141,7 +141,7 @@ function Home() {
                 </div>
                 <div className="details">
                   <label htmlFor="teamName">Team Name</label>
-                    <input type="text" className="input" id="teamName" name="teamName" onChange={(e) => handleChange(e, 'teamName')} required />
+                  <input type="text" className="input" id="teamName" name="teamName" onChange={(e) => handleChange(e, 'teamName')} required />
                 </div>
               </div>
               {formData.members.map((member, index) => (

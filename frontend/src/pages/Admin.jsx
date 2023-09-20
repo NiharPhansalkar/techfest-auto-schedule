@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import LoginCard from '../components/LoginCard';
+import AdminTable from '../components/AdminTable';
+import '../styles/admin.css';
+
 function Admin() {
-    return (
-        <div className="parent-container">
-            <div className="container">
-                <table>
-                    <td>Sr. No.</td>
-                    <td>Check</td>
-                    <td>Team Name</td>
-                    <td>Email</td>
-                    <td>Time of Arrival</td>
-                </table>
-            </div>
-        </div>
-    );
+
+  const [authenticated, setAuthenticated] = useState(false);
+
+  const handleAuth = () => {
+    setAuthenticated(true);
+  }
+
+  return (
+    <div id="parent-container">
+      <div id="container">
+        {authenticated ? (
+            <AdminTable />
+        ) : (
+            <LoginCard onAuthSuccess={handleAuth} />
+        )}
+      </div>
+    </div>
+  );
 }
+
+export default Admin;

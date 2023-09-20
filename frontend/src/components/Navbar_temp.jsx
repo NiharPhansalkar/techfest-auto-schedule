@@ -21,11 +21,9 @@ export default function App() {
 
   return (
     <>
-   
-
       <MDBNavbar expand='lg' dark  style={{ backgroundColor: '#414345' }}>
         <MDBContainer fluid>
-        <MDBNavbarBrand href='https://www.instagram.com/codex_sit/'>
+        <MDBNavbarBrand href='https://www.instagram.com/codex_sit/' target='_blank'>
         
             <img
               src= {logo}
@@ -54,7 +52,7 @@ export default function App() {
               </MDBNavbarItem>
             
               <MDBNavbarItem >
-                <MDBNavbarLink href='#about '>About</MDBNavbarLink>
+                <MDBNavbarLink href='https://www.linkedin.com/company/codex-sit-pune/' target='_blank'>About</MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>

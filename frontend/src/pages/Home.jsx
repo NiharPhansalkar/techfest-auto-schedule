@@ -129,13 +129,12 @@ function Home() {
             <img src={peopleVectorArt} style={{ padding: '10px' }} alt="vector art" />
           </div>
           <div className="information">
-            {
-              nameOfTeam ? (
-              <div className="response-message">
-                <h1>{nameOfTeam}!</h1>
-                <p>{timeToArrive}</p>
-              </div>
-            ) : (
+              {nameOfTeam ? (
+                <div className="response-message">
+                    <h1>{nameOfTeam}!</h1>
+                    <p>{timeToArrive}</p>
+                </div>
+              ) : (
               <form method="POST" onSubmit={handleSubmit}>
                 <img src={codexLight} alt="vector art" />
                 <h2>Register yourself!</h2>
@@ -209,7 +208,6 @@ function Home() {
               </form>
             )}
           </div>
-
         </div>
       </div>
     </div>

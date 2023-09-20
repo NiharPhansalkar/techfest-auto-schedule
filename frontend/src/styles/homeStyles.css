@@ -53,7 +53,7 @@
 	text-align: center;
 }
 
-form{
+.information > form{
 	width: 360px;
 }
 
@@ -154,10 +154,6 @@ form{
 	font-size: 1.2rem;
 	color: white;
 	font-family: 'poppins', sans-serif;
-}
-
-.input-div.pass{
-	margin-bottom: 4px;
 }
 
 .add-member > button {

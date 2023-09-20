@@ -19,7 +19,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { RiUserAddLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiTeamLine } from "react-icons/ri";
-import codexLight from "../assets/codex_dark.png";
+import codexLight from "../assets/codex_light.png";
 import peopleVectorArt from "../assets/people_vector.svg";
 
 function Home_temp() {
@@ -160,21 +160,6 @@ function Home_temp() {
                   <img src={codexLight} height="80" alt="" loading="lazy" />
                 </MDBNavbarBrand>
               </div>
-
-              {/* <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Sign into your account</h5>
-
-                <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg"/>
-                <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg"/>
-
-              <MDBBtn className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn>
-              <a className="small text-muted" href="#!">Forgot password?</a>
-              <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Don't have an account? <a href="#!" style={{color: '#393f81'}}>Register here</a></p>
-
-              <div className='d-flex flex-row justify-content-start'>
-                <a href="#!" className="small text-muted me-1">Terms of use.</a>
-                <a href="#!" className="small text-muted">Privacy policy</a>
-              </div> */}
-
               <div className="information d-flex flex-column">
                 {nameOfTeam ? (
                   <div className="response-message">

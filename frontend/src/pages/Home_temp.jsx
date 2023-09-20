@@ -23,6 +23,12 @@ import codexLight from "../assets/codex_dark.png";
 import peopleVectorArt from "../assets/people_vector.svg";
 
 function Home_temp() {
+  const [formData, setFormData] = useState({
+    teamName: "",
+    members: [{ name: "" }, { name: "" }],
+    userEmail: "",
+  });
+
   useEffect(() => {
     function addFocusClass(event) {
       const parent = event.target.parentNode.parentNode;
@@ -45,13 +51,7 @@ function Home_temp() {
         input.removeEventListener("blur", removeFocusClass);
       };
     });
-  }, []);
-
-  const [formData, setFormData] = useState({
-    teamName: "",
-    members: [{ name: "" }, { name: "" }],
-    userEmail: "",
-  });
+  }, [formData.members]);
 
   const [timeToArrive, setTimeToArrive] = useState("");
   const [nameOfTeam, setNameOfTeam] = useState("");

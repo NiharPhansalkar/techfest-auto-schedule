@@ -15,8 +15,8 @@ function formatPlaytime(timestamp) {
 }
 
 function AdminTable() {
-
   const [teams, setTeams] = useState([]);
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
     const container = document.getElementById('container');
@@ -40,7 +40,7 @@ function AdminTable() {
         container.style.justifyContent = 'center'; 
       }
     };
-  }, []);
+  }, [refetch]);
 
   async function handleReschedule(teamId) {
     try {
@@ -51,7 +51,17 @@ function AdminTable() {
         const newTimestamp = new Date(latestTimestamp);
         newTimestamp.setTime(newTimestamp.getTime() + 1500000);
         await axios.put(`/api/v1/reschedule/${teamId}`, { newTimestamp })
+        setRefetch((prevValue) => !prevValue);
       }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }
+
+  async function handleDelete(teamId) {
+    try {
+      await axios.get('/api/v1/deleteTeam', { teamId });
+      setRefetch((prevValue) => !prevValue);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -65,6 +75,8 @@ function AdminTable() {
         <th>Team Email</th>
         <th>Playtime</th>
         <th>Reschedule</th>
+        <th>Delete</th>
+        <th>Modify Timestamp</th>
       </tr>
       {teams.map((team, index) => (
         <tr>
@@ -74,6 +86,9 @@ function AdminTable() {
           <td>{team.arrivalTime}</td>
           <td>
             <button onClick={() => handleReschedule(team._id)}>Reschedule</button>
+          </td>
+          <td>
+            <button onClick={() => handleDelete(team._id)}>Delete</button>
           </td>
         </tr>
       ))}

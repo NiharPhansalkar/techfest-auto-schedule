@@ -77,5 +77,15 @@ module.exports = {
         res.status(500).json({ error: 'Failed to update timestamp' });
       }
     },
+    deleteTeam: async (req, res) => {
+      const { teamId } = req.body;
+      
+      try {
+        await Team.deleteOne({ _id: teamId })
+        res.status(200).json({ message: 'Successfully deleted' });
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to delete a team' });
+      }
+    },
 };
 
